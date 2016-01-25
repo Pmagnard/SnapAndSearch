@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -67,11 +68,16 @@ public class SearchActivity extends SnapAndSearchAbstractActivity implements Sna
 					result = results.next();
 					LinearLayout layout = new LinearLayout(getApplicationContext());
 					layout.setOrientation(LinearLayout.VERTICAL);
-					// set the text components
+					// set width and height of the layout
+					layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
+
+					// set the image component
 					ImageView imageView = new ImageView(getApplicationContext());
 					imageView.setImageDrawable(Drawable.createFromPath(result.getImage().getPath()));
+					imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
 					layout.addView(imageView);
 
+					// set the text components
 					TextView text = new TextView(getApplicationContext());
 					text.setText(result.getComment());
 					layout.addView(text);
