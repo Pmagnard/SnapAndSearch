@@ -13,6 +13,8 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -68,28 +70,40 @@ public class SearchActivity extends SnapAndSearchAbstractActivity implements Sna
 					result = results.next();
 					LinearLayout layout = new LinearLayout(getApplicationContext());
 					layout.setOrientation(LinearLayout.VERTICAL);
-					// set width and height of the layout
-					layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
+					// get current screen width
+					Display display = getWindowManager().getDefaultDisplay();
+					int screenWidth= display.getWidth();
+					// set width and height of the layout - layout is horizontally stretched to screen width
+					// layout content is centered
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(screenWidth, LinearLayout.LayoutParams.FILL_PARENT);
+					params.gravity= Gravity.CENTER;
+					layout.setLayoutParams(params);
 
 					// set the image component
 					ImageView imageView = new ImageView(getApplicationContext());
 					imageView.setImageDrawable(Drawable.createFromPath(result.getImage().getPath()));
-					imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+					//ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+					//imageView.setLayoutParams(params);
 					layout.addView(imageView);
 
 					// set the text components
 					TextView text = new TextView(getApplicationContext());
+					text.setText(result.getImageName());
+					text.setGravity(Gravity.CENTER_HORIZONTAL);
+					layout.addView(text);
+
+					text = new TextView(getApplicationContext());
 					text.setText(result.getComment());
+					text.setGravity(Gravity.CENTER_HORIZONTAL);
 					layout.addView(text);
 
 					text = new TextView(getApplicationContext());
 					text.setText(result.getUrl());
 					text.setLinksClickable(true);
+					text.setGravity(Gravity.CENTER_HORIZONTAL);
 					layout.addView(text);
 
-					text = new TextView(getApplicationContext());
-					text.setText(result.getImageName());
-					layout.addView(text);
+
 
 					verticalLayout.addView(layout);
 				}

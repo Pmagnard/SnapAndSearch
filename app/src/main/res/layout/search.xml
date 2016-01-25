@@ -9,7 +9,7 @@
     android:id="@+id/linear_layout_id"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center"
+    android:gravity="center_vertical|center|center_horizontal"
     android:orientation="horizontal" >
 
     <ProgressBar
