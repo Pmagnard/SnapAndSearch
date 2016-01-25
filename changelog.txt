@@ -1,0 +1,46 @@
+version 0.1 ******************
+First stable release based on Microsoft Bing Vision web site
+
+version 0.2 ******************
+improvements :
+- XML header has been removed from the result screen
+- result textView is now scrollable
+fixes :
+- layout height and width fixed (they were reversed)
+
+version 0.3 ******************
+improvements: 
+- captured picture size is now based on available sizes for the camera (no more hardcoding of the resolution)
+- image is rotated before being saved when CameraParameters.setRotation() doesn't work
+- a progress circle has been added between the snap and the search result
+- HTTP timeout is now set explicitly to 60 secs
+
+version 0.4 ******************
+fixes:
+- image rotation is forced for devices : cooper (Cyanogenmod for Galaxy Ace) and Galaxy Gio
+improvements:
+- launcher image has been renewed. 
+
+version 0.5 *******************
+fixes:
+- app doesn't crash anymore when no internet connection's available
+- camera preview works in portrait mode for Android 2.2.1 now
+- image rotation is fixed for Samsung Galaxy SL (GT-I9003)
+improvements:
+- auto-focus is done before the image is taken
+- minimum API level has been lowered to 7 (Android 2.1)
+
+version 0.6 *******************
+improvements:
+- Double-click on the Snap button is prevented by disabling the Snap button until the picture is taken after it has been pressed.
+- A menu item has been added to show the current version of the application.
+
+version 0.7 *******************
+- The result screen is now entirely scrollable.
+- The search result XML stream is parsed and filtered before being displayed.
+- This is the release candidate for version 1.0
+
+version 1.0 *******************
+- Some elements that were filtered out are now displayed on the result screen.
+- URLs are displayed as clickable links.
+ 
