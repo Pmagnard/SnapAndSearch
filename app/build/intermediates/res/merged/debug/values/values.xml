@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">SnapAndSearch</string>
-    <string name="app_result_activity_name">SnapAndSearchResult</string>
-    <string name="image_description">Image from camera</string>
-    <string name="menu_item_version">Version</string>
-    <string name="take_picture_bt_text">Snap</string>
-</resources>
