@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pmag.snapandsearch.search"
-    android:versionCode="7"
-    android:versionName="1.1" >
+    android:versionCode="10"
+    android:versionName="1.1">
 
-    <uses-sdk android:minSdkVersion="7" />
+    <uses-sdk android:minSdkVersion="10" />
 
     <!-- CAMERA DEFINITIONS -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:debuggable="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:theme="@style/SnapAndSearchTheme">
         <activity
             android:name="pmag.snapandsearch.camera.SnapActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -34,8 +33,13 @@
             android:name=".SearchActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_result_activity_name"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="pmag.snapandsearch.SettingsActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_settings_activity_name"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

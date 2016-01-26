@@ -1,4 +1,5 @@
 
     <menu xmlns:android="http://schemas.android.com/apk/res/android">
         <item android:id="@+id/menuitem_version_id" android:title="@string/menu_item_version"></item>
+        <item android:id="@+id/menuitem_settings_id" android:title="@string/menu_item_settings"></item>
     </menu>

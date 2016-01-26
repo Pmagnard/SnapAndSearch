@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_category_service">
+        <CheckBoxPreference
+
+            android:defaultValue="true"
+            android:key="prefServiceTest"
+            android:summary="@string/pref_test_service_summary"
+            android:title="@string/pref_test_service_title"></CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefServiceBing"
+            android:summary="@string/pref_bing_service_summary"
+            android:title="@string/pref_bing_service_title"></CheckBoxPreference>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -2,8 +2,20 @@
 <resources>
 
     <string name="app_name">SnapAndSearch</string>
-	<string name="app_result_activity_name">SnapAndSearchResult</string>
+    <!-- activities -->
+    <string name="app_result_activity_name">Search Results</string>
     <string name="take_picture_bt_text">Snap</string>
     <string name="image_description">Image from camera</string>
+    <string name="app_settings_activity_name">Settings</string>
+
+    <!-- menu strings -->
     <string name="menu_item_version">Version</string>
+    <string name="menu_item_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_category_service">Search Service</string>
+    <string name="pref_test_service_summary">Test - no actual search will be performed.</string>
+    <string name="pref_test_service_title">Test</string>
+    <string name="pref_bing_service_summary">Microsoft Bing Vision</string>
+    <string name="pref_bing_service_title">Bing</string>
 </resources>
