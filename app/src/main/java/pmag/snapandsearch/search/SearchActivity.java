@@ -49,6 +49,8 @@ public class SearchActivity extends SnapAndSearchAbstractActivity implements Sna
                 listSearchResult = imageSearcher.searchBingByImage(new File(searchedImageFileName));
             } else if (settings.getBoolean("prefServiceTest", false)) {
                 listSearchResult = imageSearcher.searchTestByImage(new File(searchedImageFileName));
+            } else if (settings.getBoolean("prefServiceJustvisual", false)) {
+                listSearchResult = imageSearcher.searchJustvisualByImage(new File(searchedImageFileName));
             }
             return listSearchResult;
         }

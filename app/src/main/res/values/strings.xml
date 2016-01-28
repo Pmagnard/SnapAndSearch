@@ -18,4 +18,6 @@
     <string name="pref_test_service_title">Test</string>
     <string name="pref_bing_service_summary">Microsoft Bing Vision</string>
     <string name="pref_bing_service_title">Bing</string>
+    <string name="pref_justvisual_service_summary">JustVisual</string>
+    <string name="pref_justvisual_service_title">JustVisual</string>
 </resources>

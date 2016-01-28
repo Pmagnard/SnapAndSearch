@@ -12,5 +12,10 @@
             android:key="prefServiceBing"
             android:summary="@string/pref_bing_service_summary"
             android:title="@string/pref_bing_service_title"></CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefServiceJustvisual"
+            android:summary="@string/pref_justvisual_service_summary"
+            android:title="@string/pref_justvisual_service_title"></CheckBoxPreference>
     </PreferenceCategory>
 </PreferenceScreen>

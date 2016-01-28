@@ -15,6 +15,7 @@ import pmag.snapandsearch.search.R;
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener {
     private CheckBoxPreference bingCheckBoxPref = null;
     private CheckBoxPreference testCheckBoxPref = null;
+    private CheckBoxPreference justvisualCheckBoxPref = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +24,10 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         // set and register the checkbox to this listener
         bingCheckBoxPref = (CheckBoxPreference) getPreferenceManager().findPreference("prefServiceBing");
         testCheckBoxPref = (CheckBoxPreference) getPreferenceManager().findPreference("prefServiceTest");
+        justvisualCheckBoxPref = (CheckBoxPreference) getPreferenceManager().findPreference("prefServiceJustvisual");
         bingCheckBoxPref.setOnPreferenceClickListener(this);
         testCheckBoxPref.setOnPreferenceClickListener(this);
+        justvisualCheckBoxPref.setOnPreferenceClickListener(this);
     }
 
 
@@ -33,12 +36,18 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         // if a checkbox is checked then uncheck every other checkboxes
         if ((preference == testCheckBoxPref) && (testCheckBoxPref.isChecked())) {
             bingCheckBoxPref.setChecked(false);
+            justvisualCheckBoxPref.setChecked(false);
         }
         else if ((preference == bingCheckBoxPref) && (bingCheckBoxPref.isChecked())) {
             testCheckBoxPref.setChecked(false);
+            justvisualCheckBoxPref.setChecked(false);
+            bingCheckBoxPref.setChecked(false);
+        }
+        else if ((preference == justvisualCheckBoxPref) && (justvisualCheckBoxPref.isChecked())) {
+            testCheckBoxPref.setChecked(false);
         }
         // if not checkbox is checked then check test checkbox
-        if ((!bingCheckBoxPref.isChecked()) && (!testCheckBoxPref.isChecked())) {
+        if ((!bingCheckBoxPref.isChecked()) && (!testCheckBoxPref.isChecked()) && (!justvisualCheckBoxPref.isChecked())) {
             testCheckBoxPref.setChecked(true);
         }
         return false;
