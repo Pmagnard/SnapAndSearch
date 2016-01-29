@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
 dependencies {
-    compile files('C:/Users/IBM_ADMIN/Documents/Android-Studio-Projects/SnapAndSearch/imported-libs/android-10.jar')
+    compile project(':app')
     compile fileTree(include: ['*.jar'], dir: 'libs')
 }

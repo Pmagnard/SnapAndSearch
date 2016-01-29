@@ -1,0 +1,19 @@
+Before going to production :
+- build signed apk
+- build apk in release mode with encryption (SafeGuard ?)
+
+
+Enhancements :
+- use a (new) page without camera preview as main activity
+- add menu to toolbar
+- add other flavours of JustVisual search (flower, pet, etc...)
+- implement Google Vision API
+- move to a private VCS (since the code will soon contains private API keys)
+- provide access to the logs
+- internationalize and provide french alternative to english
+
+Fixes :
+- have a proper usage of the JustVisual API key
+- center the circle progress bar
+- have the URL clickable (open a browser)
+- have Bing search back up and running

@@ -33,6 +33,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -173,7 +176,7 @@ public class SearchImageHelper {
     private HttpResponse uploadImageToBing(File imageFile, HttpClient httpClient) throws IOException {
 
         {
-            //TODO move this part to URLConnection
+            //TODO rewrite this method with URLConnection
             HttpPost httpPost = new HttpPost("http://wp.bingvision.ar.glbdns.microsoft.com/ImageSearchV2.ashx");
             FileInputStream fis = new FileInputStream(imageFile);
             byte[] imageBytes = new byte[(int) imageFile.length()];
@@ -205,8 +208,6 @@ public class SearchImageHelper {
             Log.e(SnapAndSearchInterface.MY_APP_NAME, "error parsing XML file", e);
             return null;
         }
-
-
         int eventType;
         try {
             eventType = xmlParser.getEventType();
@@ -222,10 +223,8 @@ public class SearchImageHelper {
                 Log.i(SnapAndSearchInterface.MY_APP_NAME, "Start tag " + tagName);
                 if (isTagToBeDisplayed(tagName)) {
                     SearchResult searchResult = new SearchResult();
-
                     textBuffer.append("** " + tagName);
                     textBuffer.append(System.getProperty("line.separator"));
-
                     //show attributes
                     for (int n = 0; n < xmlParser.getAttributeCount(); n++) {
                         textBuffer.append(xmlParser.getAttributeName(n) + ": ");
@@ -251,6 +250,13 @@ public class SearchImageHelper {
             }
         }
         Log.i(SnapAndSearchInterface.MY_APP_NAME, "End document");
+
+        if (searchResults.size() == 0) {
+            // if nothing is found then add a fake result record with a "no match" comment
+            SearchResult result = new SearchResult();
+            result.setComment("NO MATCH");
+            searchResults.add(result);
+        }
         return searchResults;
     }
 
@@ -261,7 +267,7 @@ public class SearchImageHelper {
      */
     public List<SearchResult> searchJustvisualByImage(File imageFile) {
 
-        List<String> response = null;
+        String response = null;
         try {
             response = uploadImageToJustvisual(imageFile);
         } catch (IOException e) {
@@ -271,33 +277,39 @@ public class SearchImageHelper {
         SearchResult result = null;
 
         List<SearchResult> results = new ArrayList<SearchResult>();
-
-        if ((response != null ) && (response.size() > 0 )) {
-            Iterator<String> responseIterator = response.iterator();
-            while (responseIterator.hasNext()) {
-                //TODO parse the response properly
-                result = new SearchResult();
-                result.setImage(imageFile);
-                result.setImageName(imageFile.getName());
-                result.setComment(responseIterator.next());
-                result.setUrl("http://justvisual.com");
-                results.add(result);
+        if (response != null) {
+            try {
+                JSONObject reader = new JSONObject(response);
+                JSONArray resultsArray = reader.getJSONArray("images");
+                for (int i = 0; i < resultsArray.length(); i++) {
+                    JSONObject object = (JSONObject) resultsArray.get(i);
+                    result = new SearchResult();
+                    //result.setImage(imageFile);
+                    result.setImageName(imageFile.getName());
+                    result.setComment(object.getString("title"));
+                    result.setUrl(object.getString("pageUrl"));
+                    result.setImageUrl(object.getString("imageUrl"));
+                    results.add(result);
+                }
+            } catch (JSONException e) {
+                Log.e(SnapAndSearchInterface.MY_APP_NAME, "error parsing JSON response", e);
+                return results;
             }
+
         }
         return results;
 
     }
 
-    private List<String> uploadImageToJustvisual(File imageFile) throws IOException {
+    private String uploadImageToJustvisual(File imageFile) throws IOException {
         String boundary = "*****";
         String linefeed = "\r\n";
         URL url = new URL("http://decor.vsapi01.com/api-search?apikey=testkey");
         HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
-        List<String> response = new ArrayList<String>();
+        String response = "";
 
         try {
             // setting up the request
-
             httpConnection.setUseCaches(false);
             httpConnection.setDoOutput(true);
             httpConnection.setRequestMethod("POST");
@@ -345,7 +357,7 @@ public class SearchImageHelper {
                         httpConnection.getInputStream()));
                 String line = null;
                 while ((line = reader.readLine()) != null) {
-                    response.add(line);
+                    response = response + line;
                 }
                 reader.close();
             }

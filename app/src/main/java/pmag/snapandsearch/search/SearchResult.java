@@ -6,6 +6,12 @@ import java.io.File;
  * Created by FR067458 on 25/01/2016.
  */
 public class SearchResult {
+    private File image = null;
+    private String imageName = null;
+    private String comment = null;
+    private String url = null;
+    private String imageUrl = null;
+
     public File getImage() {
         return image;
     }
@@ -38,9 +44,13 @@ public class SearchResult {
         this.url = url;
     }
 
-    private File image;
-    private String imageName;
-    private String comment;
-    private String url;
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 
 }

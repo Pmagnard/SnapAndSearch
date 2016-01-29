@@ -12,17 +12,22 @@ import pmag.snapandsearch.SnapAndSearchAbstractActivity;
 import pmag.snapandsearch.SnapAndSearchInterface;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,7 +49,7 @@ public class SearchActivity extends SnapAndSearchAbstractActivity implements Sna
             searchedImageFileName = param[0];
             List<SearchResult> listSearchResult = null;
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            // switch to run the serach service checked in user preferences
+            // switch to run the search service checked in user preferences
             if (settings.getBoolean("prefServiceBing", false)) {
                 listSearchResult = imageSearcher.searchBingByImage(new File(searchedImageFileName));
             } else if (settings.getBoolean("prefServiceTest", false)) {
@@ -70,32 +75,52 @@ public class SearchActivity extends SnapAndSearchAbstractActivity implements Sna
 
                 while (results.hasNext()) {
                     result = results.next();
-
-
                     // set the image component
-                    ImageView imageView = new ImageView(getApplicationContext());
-                    imageView.setImageDrawable(Drawable.createFromPath(result.getImage().getPath()));
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
-                    imageView.setLayoutParams(imageParams);
-                    layout.addView(imageView);
-
-                    // set the text components
-                    TextView text = new TextView(getApplicationContext());
-                    text.setText(result.getImageName());
-                    text.setGravity(Gravity.CENTER_HORIZONTAL);
-                    layout.addView(text);
-
-                    text = new TextView(getApplicationContext());
-                    text.setText(result.getComment());
-                    text.setGravity(Gravity.CENTER_HORIZONTAL);
-                    layout.addView(text);
-
-                    text = new TextView(getApplicationContext());
-                    text.setText(result.getUrl());
-                    text.setLinksClickable(true);
-                    text.setGravity(Gravity.CENTER_HORIZONTAL);
-                    layout.addView(text);
+                    if (result.getImage() != null) {
+                        ImageView imageView = new ImageView(getApplicationContext());
+                        imageView.setImageDrawable(Drawable.createFromPath(result.getImage().getPath()));
+                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+                        imageView.setLayoutParams(imageParams);
+                        layout.addView(imageView);
+                    } else if (result.getImageUrl() != null) {
+                        WebView webView = new WebView(getApplicationContext());
+                        WebSettings webSettings = webView.getSettings();
+                        webSettings.setLoadsImagesAutomatically(true);
+                        webSettings.setSupportZoom(true);
+                        webSettings.setBuiltInZoomControls(true);
+                        webView.setBackgroundColor(Color.TRANSPARENT);
+                        webView.getSettings().setUseWideViewPort(true);
+                        webView.getSettings().setLoadWithOverviewMode(true);
+                        webView.setWebViewClient(new WebViewClient());
+                        webView.loadUrl(result.getImageUrl());
+                        //TODO set display setting for webView
+                        layout.addView(webView);
+                    }
+                    TextView text = null;
+                    if (result.getImageName() != null) {
+                        // set the text components
+                        text = new TextView(getApplicationContext());
+                        text.setText(result.getImageName());
+                        text.setGravity(Gravity.CENTER_HORIZONTAL);
+                        layout.addView(text);
+                    }
+                    if (result.getComment() != null) {
+                        text = new TextView(getApplicationContext());
+                        text.setText(result.getComment());
+                        text.setGravity(Gravity.CENTER_HORIZONTAL);
+                        layout.addView(text);
+                    }
+                    if (result.getUrl() != null) {
+                        text = new TextView(getApplicationContext());
+                        text.setText(result.getUrl());
+                        //TODO make the tap to the link open a browser
+                        //make the link(s) in the text clickable
+                        text.setMovementMethod(LinkMovementMethod.getInstance());
+                        text.setLinksClickable(true);
+                        text.setGravity(Gravity.CENTER_HORIZONTAL);
+                        layout.addView(text);
+                    }
                 }
             }
             //remove the file now

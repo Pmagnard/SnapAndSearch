@@ -43,4 +43,8 @@ version 0.7 *******************
 version 1.0 *******************
 - Some elements that were filtered out are now displayed on the result screen.
 - URLs are displayed as clickable links.
+
+version 1.1 *******************
+- settings menu add wich allow user to choose the search by image provider (test, Bing and JustVisual)
+-
  

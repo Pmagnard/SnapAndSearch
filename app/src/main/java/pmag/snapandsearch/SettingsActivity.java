@@ -41,10 +41,11 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         else if ((preference == bingCheckBoxPref) && (bingCheckBoxPref.isChecked())) {
             testCheckBoxPref.setChecked(false);
             justvisualCheckBoxPref.setChecked(false);
-            bingCheckBoxPref.setChecked(false);
+
         }
         else if ((preference == justvisualCheckBoxPref) && (justvisualCheckBoxPref.isChecked())) {
             testCheckBoxPref.setChecked(false);
+            bingCheckBoxPref.setChecked(false);
         }
         // if not checkbox is checked then check test checkbox
         if ((!bingCheckBoxPref.isChecked()) && (!testCheckBoxPref.isChecked()) && (!justvisualCheckBoxPref.isChecked())) {
